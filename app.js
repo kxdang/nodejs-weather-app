@@ -1,11 +1,10 @@
-console.log("Starting");
+const config = require("./config");
+const request = require("request");
 
-setTimeout(() => {
-  console.log("2 seconds has passed");
-}, 2000);
-
-setTimeout(() => {
-  console.log("0 second timer");
-}, 0);
-
-console.log("Stopping");
+const key = config.configAPI;
+const url = `https://api.darksky.net/forecast/${key}/37.8267,-122.4233`;
+console.log(url);
+request({ url: url }, (error, response) => {
+  const data = JSON.parse(response.body);
+  console.log(data.currently);
+});
