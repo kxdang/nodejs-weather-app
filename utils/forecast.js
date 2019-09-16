@@ -6,16 +6,16 @@ const key = config.configAPI;
 const forecast = (lat, long, callback) => {
   const url = `https://api.darksky.net/forecast/${key}/${lat},${long}?units=si`;
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("Unable to connect to location", undefined);
-    } else if (response.body.error) {
+    } else if (body.error) {
       callback("Unable to find location", undefined);
     } else {
-      const currently = response.body.currently;
+      const currently = body.currently;
       callback(
         undefined,
-        `${response.body.daily.data[0].summary} It is currently ${currently.temperature} degrees outside. There is a ${currently.precipProbability}% chance of rain`
+        `${body.daily.data[0].summary} It is currently ${currently.temperature} degrees outside. There is a ${currently.precipProbability}% chance of rain`
       );
     }
   });
