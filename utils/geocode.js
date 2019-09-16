@@ -1,11 +1,14 @@
 const request = require("request");
+const config = require("../config");
+
+const mapAPI = config.mapAPI;
 
 const geocode = (address, callback) => {
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
     address
-  )}.json?access_token=pk.eyJ1Ijoia3hkYW5nIiwiYSI6ImNrMGhidGtrcTAwenEzcXBwZG4zcG1qcWoifQ.9UesO7UBWMh7i7IBsGybRw&limit=1`;
+  )}.json?access_token=${mapAPI}&limit=1`;
 
-  request({ url: url, json: true }, (error, { body }) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("Unable to connect to location services", undefined);
     } else if (body.features.length === 0) {
